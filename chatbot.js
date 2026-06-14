@@ -3,7 +3,7 @@
      ============================================================ */
   const CFG = {
     groqKey    : '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',
-    waNumber   : '919999999999',
+    waNumber   : '919999999989',
     webhookUrl : 'https://hook.eu2.make.com/bysh1kk41jadvaoinf6eiyx8n864633b',
   };
 
