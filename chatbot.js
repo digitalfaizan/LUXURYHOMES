@@ -2,7 +2,7 @@
      CONFIG — update these 3 values only
      ============================================================ */
   const CFG = {
-    groqKey    : '',
+    groqKey    : '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',
     waNumber   : '919999999999',
     webhookUrl : 'https://hook.eu2.make.com/bysh1kk41jadvaoinf6eiyx8n864633b',
   };
