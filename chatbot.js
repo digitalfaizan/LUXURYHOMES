@@ -2,7 +2,7 @@
      CONFIG — update these 3 values only
      ============================================================ */
   const CFG = {
-    groqKey    : 'YOUR_GROQ_API_KEY',
+    groqKey    : '',
     waNumber   : '919999999999',
     webhookUrl : 'https://hook.eu2.make.com/bysh1kk41jadvaoinf6eiyx8n864633b',
   };
