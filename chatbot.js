@@ -6,7 +6,7 @@ const CFG = {
   waNumber   : '919999999989',
   webhookUrl : 'https://hook.eu2.make.com/7dwuqdlwtqjto2b5g15197ifk3qbdvx7',
 };
- 
+
 /* ============================================================
    PROPERTY DATABASE
    Add/remove properties here. Same IDs should be in your
@@ -60,7 +60,7 @@ const PROPERTIES = [
     intent:['Buy'], location:'Niti Khand', area:'Niti Khand 2, Indirapuram',
     price:'₹92 Lakh', size:'1680 sq ft', bhk:3,
     tags:['Study Room','2 Parking','Club House'],
-    budget_tags:['60L-1Cr'], emoji:'🏘',
+    budget_tags:['60L-1Cr','1Cr-2Cr','Above 2Cr'], emoji:'🏘',
   },
   {
     id:'LH008', title:'3 BHK Fully Furnished', type:'Flat',
@@ -81,10 +81,10 @@ const PROPERTIES = [
     intent:['Buy'], location:'Vasundhara', area:'Vasundhara, Ghaziabad',
     price:'₹1.8 Crore', size:'2800 sq ft', bhk:4,
     tags:['Private Garden','4 BHK','Premium Society'],
-    budget_tags:['1Cr-2Cr'], emoji:'🏰',
+    budget_tags:['1Cr-2Cr','Above 2Cr'], emoji:'🏰',
   },
 ];
- 
+
 /* ============================================================
    PROPERTY MATCHING ENGINE
    Returns up to 3 best matches based on lead data
@@ -97,7 +97,7 @@ function matchProperties(leadType, propType, budget, location) {
     if (budget && budget !== 'Any' && !p.budget_tags.includes(budget)) return false;
     return true;
   });
- 
+
   // Loosen location if too few
   if (results.length < 2) {
     results = PROPERTIES.filter(p => {
@@ -107,15 +107,17 @@ function matchProperties(leadType, propType, budget, location) {
       return true;
     });
   }
- 
+
   // Loosen budget + location if still too few
   if (results.length < 2) {
     results = PROPERTIES.filter(p => p.intent.includes(leadType));
   }
- 
+
+  // Last resort — show any 3 properties
+  if (results.length === 0) results = PROPERTIES.slice(0, 3);
   return results.slice(0, 3);
 }
- 
+
 /* ============================================================
    LEAD STATE
    ============================================================ */
@@ -124,11 +126,11 @@ const lead = {
   name:'', email:'', phone:'', summary:'',
   interestedProperties: [], // array of {id, title, price}
 };
- 
+
 let currentStep  = 'start';
 let chatHistory  = [];
 let isOpen       = false;
- 
+
 /* ============================================================
    FLOW DEFINITION
    ============================================================ */
@@ -145,7 +147,7 @@ const FLOW = {
       { label:'💬 Ask a Question',        val:'Question',    next:'ai_question'      },
     ],
   },
- 
+
   /* ---- PROPERTY TYPES ---- */
   prop_type_buy: {
     msg:'What type of property do you want to buy?',
@@ -178,7 +180,7 @@ const FLOW = {
       { label:'📐 Plot / Land',      val:'Plot',   next:'budget_invest' },
     ],
   },
- 
+
   /* ---- BUDGETS ---- */
   budget_buy: {
     msg:'What is your purchase budget?',
@@ -212,7 +214,7 @@ const FLOW = {
       { label:'Above ₹2 Crore', val:'Above 2Cr',next:'location' },
     ],
   },
- 
+
   /* ---- SELL / GIVE ON RENT ---- */
   sell_type: {
     msg:'What type of property do you want to sell?',
@@ -228,11 +230,23 @@ const FLOW = {
     msg:'What price are you expecting?',
     type:'options', field:'budget',
     options:[
-      { label:'Under ₹40 Lakh',  val:'Under 40L', next:'location' },
-      { label:'₹40L – ₹70L',     val:'40L-70L',   next:'location' },
-      { label:'₹70L – ₹1 Crore', val:'70L-1Cr',   next:'location' },
-      { label:'₹1Cr – ₹2Cr',     val:'1Cr-2Cr',   next:'location' },
-      { label:'Above ₹2 Crore',  val:'Above 2Cr', next:'location' },
+      { label:'Under ₹40 Lakh',  val:'Under 40L', next:'sell_location' },
+      { label:'₹40L – ₹70L',     val:'40L-70L',   next:'sell_location' },
+      { label:'₹70L – ₹1 Crore', val:'70L-1Cr',   next:'sell_location' },
+      { label:'₹1Cr – ₹2Cr',     val:'1Cr-2Cr',   next:'sell_location' },
+      { label:'Above ₹2 Crore',  val:'Above 2Cr', next:'sell_location' },
+    ],
+  },
+  sell_location: {
+    msg:'Where is your property located?',
+    type:'options', field:'location',
+    options:[
+      { label:'Gyan Khand',         val:'Gyan Khand',         next:'ask_name' },
+      { label:'Niti Khand',         val:'Niti Khand',         next:'ask_name' },
+      { label:'Shakti Khand',       val:'Shakti Khand',       next:'ask_name' },
+      { label:'Vaibhav Khand',      val:'Vaibhav Khand',      next:'ask_name' },
+      { label:'Crossings Republik', val:'Crossings Republik', next:'ask_name' },
+      { label:'Other Area',         val:'Other',              next:'ask_name' },
     ],
   },
   give_type: {
@@ -249,13 +263,25 @@ const FLOW = {
     msg:'What monthly rent are you expecting?',
     type:'options', field:'budget',
     options:[
-      { label:'Under ₹15,000', val:'Under 15K', next:'location' },
-      { label:'₹15K – ₹30K',   val:'15K-30K',  next:'location' },
-      { label:'₹30K – ₹60K',   val:'30K-60K',  next:'location' },
-      { label:'Above ₹60,000', val:'Above 60K',next:'location'  },
+      { label:'Under ₹15,000', val:'Under 15K', next:'give_location' },
+      { label:'₹15K – ₹30K',   val:'15K-30K',  next:'give_location' },
+      { label:'₹30K – ₹60K',   val:'30K-60K',  next:'give_location' },
+      { label:'Above ₹60,000', val:'Above 60K', next:'give_location' },
     ],
   },
- 
+  give_location: {
+    msg:'Which area is your property in?',
+    type:'options', field:'location',
+    options:[
+      { label:'Gyan Khand',         val:'Gyan Khand',         next:'ask_name' },
+      { label:'Niti Khand',         val:'Niti Khand',         next:'ask_name' },
+      { label:'Shakti Khand',       val:'Shakti Khand',       next:'ask_name' },
+      { label:'Vaibhav Khand',      val:'Vaibhav Khand',      next:'ask_name' },
+      { label:'Crossings Republik', val:'Crossings Republik', next:'ask_name' },
+      { label:'Other Area',         val:'Other',              next:'ask_name' },
+    ],
+  },
+
   /* ---- LOCATION ---- */
   location: {
     msg:'Which area are you interested in?',
@@ -270,7 +296,7 @@ const FLOW = {
       { label:'Any / Flexible',     val:'Any',                next:'show_properties' },
     ],
   },
- 
+
   /* ---- CONTACT ---- */
   ask_name: {
     msg:"Perfect! To share full details and schedule a visit, I'll need your contact info.\n\nWhat's your full name?",
@@ -291,14 +317,14 @@ const FLOW = {
     msg:'',
     type:'done',
   },
- 
+
   /* ---- AI FREE QUESTION ---- */
   ai_question: {
     msg:"Sure! Ask me anything about properties in Indirapuram 😊",
     type:'ai_mode',
   },
 };
- 
+
 /* ============================================================
    TOGGLE
    ============================================================ */
@@ -313,7 +339,7 @@ function lhToggle() {
   if (isOpen && notif) notif.style.display = 'none';
   if (isOpen) lhScroll();
 }
- 
+
 /* ============================================================
    INIT
    ============================================================ */
@@ -324,7 +350,7 @@ window.addEventListener('DOMContentLoaded', () => {
     goToStep('start');
   }, 2000);
 });
- 
+
 /* ============================================================
    STEP ENGINE
    ============================================================ */
@@ -332,38 +358,38 @@ function goToStep(stepKey) {
   currentStep = stepKey;
   const step  = FLOW[stepKey];
   if (!step) return;
- 
+
   /* Special steps */
   if (stepKey === 'show_properties') { showMatchedProperties(); return; }
   if (stepKey === 'done')            { handleDone(); return; }
- 
+
   const msg = step.msg.replace('{name}', lead.name || '');
   if (msg) addBotMsg(msg);
- 
+
   if (step.type === 'options')   addOptions(step.options, step.field);
   if (step.type === 'input')     addInputField(step);
   if (step.type === 'ai_mode')   showFreeInput();
 }
- 
+
 /* ============================================================
    SHOW MATCHED PROPERTIES
    ============================================================ */
 function showMatchedProperties() {
   const matches = matchProperties(lead.leadType, lead.propertyType, lead.budget, lead.location);
- 
+
   if (matches.length === 0) {
     addBotMsg("I couldn't find an exact match right now, but our team has more listings. Let me connect you with an expert! 😊");
     setTimeout(() => goToStep('ask_name'), 500);
     return;
   }
- 
+
   addBotMsg(`Great news! 🎉 I found ${matches.length} propert${matches.length > 1 ? 'ies' : 'y'} matching your requirement. Tap "I'm Interested" on any that you like!`);
- 
+
   setTimeout(() => {
     matches.forEach((prop, idx) => {
       setTimeout(() => addPropertyCard(prop), idx * 300);
     });
- 
+
     // After all cards, ask if they want contact
     setTimeout(() => {
       addBotMsg("Would you like our expert to call you with more details and arrange a site visit? 📞");
@@ -384,7 +410,7 @@ function showMatchedProperties() {
     }, matches.length * 300 + 500);
   }, 400);
 }
- 
+
 function addPropertyCard(prop) {
   const card = document.createElement('div');
   card.className = 'lh-prop-card';
@@ -408,7 +434,7 @@ function addPropertyCard(prop) {
   document.getElementById('lh-msgs').appendChild(card);
   lhScroll();
 }
- 
+
 function selectProperty(id, title, price, btn) {
   // Toggle selection
   const already = lead.interestedProperties.find(p => p.id === id);
@@ -422,7 +448,7 @@ function selectProperty(id, title, price, btn) {
     btn.classList.add('selected');
   }
 }
- 
+
 /* ============================================================
    HANDLE DONE — fire webhook after contact collected
    ============================================================ */
@@ -430,19 +456,19 @@ function handleDone() {
   const selectedStr = lead.interestedProperties.map(p => `${p.id}: ${p.title} (${p.price})`).join(' | ');
   lead.summary = `${lead.leadType} | ${lead.propertyType} | Budget: ${lead.budget} | Location: ${lead.location}`;
   if (selectedStr) lead.summary += ` | Interested in: ${selectedStr}`;
- 
+
   // Fire webhook with ALL data including property IDs
   fireLead();
- 
+
   // Show success
   addBotMsg(`Thank you ${lead.name}! ✅\n\nOur property expert will call you at ${lead.phone} within 2 hours. Full property details are being sent to ${lead.email} right now!\n\nYou can also reach us directly on WhatsApp 👇`);
- 
+
   // Show WA button
   const txt = encodeURIComponent(`Hi Luxury Homes! I'm ${lead.name}. ${lead.summary}`);
   const wrap = document.createElement('div');
   wrap.innerHTML = `<a href="https://wa.me/${CFG.waNumber}?text=${txt}" target="_blank" class="lh-wa-btn" style="margin-left:35px;display:inline-flex;">💬 Chat on WhatsApp</a>`;
   document.getElementById('lh-msgs').appendChild(wrap);
- 
+
   // Restart option
   setTimeout(() => {
     const r = document.createElement('div');
@@ -456,7 +482,7 @@ function handleDone() {
     lhScroll();
   }, 800);
 }
- 
+
 /* ============================================================
    FIRE WEBHOOK
    ============================================================ */
@@ -480,9 +506,9 @@ async function fireLead() {
     source             : window.location.href,
     page               : document.title,
   };
- 
+
   console.log('📤 Lead payload:', payload);
- 
+
   try {
     await fetch(CFG.webhookUrl, {
       method:'POST',
@@ -492,7 +518,7 @@ async function fireLead() {
     console.log('✅ Sent to Make.com');
   } catch(e) { console.warn('Webhook error:', e); }
 }
- 
+
 /* ============================================================
    OPTIONS / INPUT HELPERS
    ============================================================ */
@@ -514,22 +540,22 @@ function addOptions(options, field) {
   document.getElementById('lh-msgs').appendChild(wrap);
   lhScroll();
 }
- 
+
 function addInputField(step) {
   const wrap = document.createElement('div');
   wrap.className = 'lh-input-step';
- 
+
   const inp = document.createElement('input');
   inp.type = step.inputType || 'text';
   inp.placeholder = step.placeholder || '';
   inp.autocomplete = 'off';
- 
+
   const err = document.createElement('span');
   err.className = 'lh-err-msg';
- 
+
   const btn = document.createElement('button');
   btn.textContent = 'Continue →';
- 
+
   const submit = () => {
     const val = inp.value.trim();
     if (!val) { inp.classList.add('error'); err.textContent = 'Please enter a value'; err.style.display='block'; return; }
@@ -544,31 +570,33 @@ function addInputField(step) {
     addUserMsg(step.field === 'phone' ? '••••••••••' : val); // hide phone for privacy
     setTimeout(() => goToStep(step.next), 400);
   };
- 
+
   inp.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
   inp.addEventListener('input', () => { inp.classList.remove('error'); err.style.display='none'; });
   btn.onclick = submit;
- 
+
   wrap.appendChild(inp);
   wrap.appendChild(err);
   wrap.appendChild(btn);
   document.getElementById('lh-msgs').appendChild(wrap);
-  setTimeout(() => inp.focus(), 100);
+  setTimeout(() => { inp.focus(); }, 100);
+  // Make sure bottom input bar stays hidden during structured flow
+  document.getElementById('lh-input-row').style.display = 'none';
   lhScroll();
 }
- 
+
 function showFreeInput() {
   document.getElementById('lh-input-row').style.display = 'flex';
   setTimeout(() => document.getElementById('lh-input')?.focus(), 200);
 }
- 
+
 /* ============================================================
    AI MODE (for general questions)
    ============================================================ */
 const AI_SYSTEM = `You are Priya, a friendly property advisor at Luxury Homes, Indirapuram. Answer property questions briefly (2-3 sentences max).
 Key facts: 2BHK ₹45L-75L, 3BHK ₹70L-1.2Cr, Shops ₹80L-2Cr, Rentals ₹15K-35K/mo, Appreciation ~12%/yr, Phone +91 99999 99999, Areas: Gyan Khand, Niti Khand, Shakti Khand, Vaibhav Khand, Crossings Republik.
 Keep replies SHORT. Don't give bullet lists.`;
- 
+
 async function lhFreeText() {
   const input = document.getElementById('lh-input');
   const text  = input?.value.trim();
@@ -606,7 +634,7 @@ async function lhFreeText() {
     addBotMsg("Sorry, small issue! Call us: +91 99999 99999 😊");
   }
 }
- 
+
 /* ============================================================
    VALIDATION
    ============================================================ */
@@ -615,14 +643,14 @@ function isValidPhone(p) {
   const c = p.replace(/[\s\-\+]/g,'');
   return /^(91)?[6-9]\d{9}$/.test(c) || /^[6-9]\d{9}$/.test(c);
 }
- 
+
 /* ============================================================
    RESET
    ============================================================ */
 function resetLead() {
   Object.keys(lead).forEach(k => { lead[k] = k === 'interestedProperties' ? [] : ''; });
 }
- 
+
 /* ============================================================
    UI HELPERS
    ============================================================ */
@@ -633,7 +661,7 @@ function addUserMsg(text) {
   document.getElementById('lh-msgs').appendChild(d);
   lhScroll();
 }
- 
+
 function addBotMsg(text) {
   const d = document.createElement('div');
   d.className = 'lh-row bot';
@@ -642,7 +670,7 @@ function addBotMsg(text) {
   document.getElementById('lh-msgs').appendChild(d);
   lhScroll();
 }
- 
+
 function showTyping() {
   if (document.getElementById('lh-typing-row')) return;
   const d = document.createElement('div');
