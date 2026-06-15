@@ -747,56 +747,31 @@
   </footer>
 
   <!-- AI CHATBOT —  -->
-  <button id="lh-chat-btn" onclick="lhToggle()" aria-label="Chat with Priya">
-    <span id="lh-icon">💬</span>
-    <span id="lh-notif">1</span>
-  </button>
+ <button id="lh-chat-btn" onclick="lhToggle()" aria-label="Chat with Priya">
+  <span id="lh-icon">💬</span>
+  <span id="lh-notif">1</span>
+</button>
 
-  <div id="lh-chat-window" aria-hidden="true">
-    <div id="lh-chat-head">
-      <div class="lh-head-left">
-        <div class="lh-head-avatar">P</div>
-        <div>
-          <span class="lh-head-name">Assistan· Luxury Homes</span>
-          <span class="lh-head-status">● Online — replies instantly</span>
-        </div>
+<div id="lh-chat-window" aria-hidden="true">
+  <div id="lh-chat-head">
+    <div class="lh-head-left">
+      <div class="lh-head-avatar">P</div>
+      <div>
+        <span class="lh-head-name">Priya · Luxury Homes</span>
+        <span class="lh-head-status">● Online — replies instantly</span>
       </div>
-      <button id="lh-close-btn" onclick="lhToggle()">✕</button>
     </div>
-
-    <div id="lh-msgs"></div>
-
-    <div id="lh-input-row">
-      <input type="text" id="lh-input"
-        placeholder="Ask about properties..."
-        onkeydown="if(event.key==='Enter')lhSend()"
-        autocomplete="off" />
-      <button id="lh-send" onclick="lhSend()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2.5"
-          stroke-linecap="round" stroke-linejoin="round">
-          <line x1="22" y1="2" x2="11" y2="13"/>
-          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-        </svg>
-      </button>
-    </div>
-    <p id="lh-footer">Powered by AI · Your info stays private 🔒</p>
+    <button id="lh-close-btn" onclick="lhToggle()">✕</button>
   </div>
-  <!-- QUOTE MODAL -->
-  <div class="modal-overlay" id="quote-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal-box">
-      <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
-      <h3 id="modal-title">Get a <em>Free Quote</em></h3>
-      <p>Our expert will share price, availability and loan options within 2 hours.</p>
-      <div class="modal-fields">
-        <input type="text" id="m-name" placeholder="Your Name *" />
-        <input type="tel" id="m-phone" placeholder="WhatsApp Number *" />
-        <input type="email" id="m-email" placeholder="Email (Optional)" />
-      </div>
-      <button class="modal-submit" onclick="submitModal()">📲 Get Quote on WhatsApp</button>
-      <p class="modal-note">Free · No obligation · Response within 2 hours</p>
-    </div>
+  <div id="lh-msgs"></div>
+  <div id="lh-input-row">
+    <input type="text" id="lh-input" placeholder="Type a message..." onkeydown="if(event.key==='Enter')lhFreeText()" autocomplete="off" />
+    <button id="lh-send" onclick="lhFreeText()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
   </div>
+  <p id="lh-footer">Powered by AI · Your info stays private 🔒</p>
+</div>
 
   <!-- STICKY CTA mobile -->
   <div class="sticky-cta">
