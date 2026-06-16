@@ -3,18 +3,19 @@
    Webhook: Make.com  |  Chatbot: Voiceflow
    ============================================================ */
 
-const WA_NUM      = '919999999999';        // ← your real WhatsApp number
+const WA_NUM      = '9199999999';        // ← your WhatsApp number
 const BIZ_NAME    = 'Luxury Homes Indirapuram';
+// ⬇️ PASTE YOUR NEW MAKE WEBHOOK URL HERE ⬇️
 const WEBHOOK_URL = 'https://hook.eu2.make.com/7dwuqdlwtqjto2b5g15197ifk3qbdvx7';
 
 /* ============================================================
    SEND TO MAKE WEBHOOK
-   Sends a structured payload so Make can route to the right
-   Google Sheet tab (Buy / Rent / Sell / Invest / Commercial)
    ============================================================ */
 async function sendToWebhook(payload) {
+  // Skip if no valid webhook URL set yet
+  if (!WEBHOOK_URL || WEBHOOK_URL === 'PASTE_NEW_WEBHOOK_URL_HERE') return;
   try {
-    await fetch(WEBHOOK_URL, {
+    const res = await fetch(WEBHOOK_URL, {
       method : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body   : JSON.stringify({
@@ -24,9 +25,9 @@ async function sendToWebhook(payload) {
         page      : document.title,
       }),
     });
+    if (!res.ok) console.warn('Webhook returned:', res.status);
   } catch (err) {
-    // Webhook failure is silent — WhatsApp fallback still works
-    console.warn('Webhook error:', err);
+    // Silent fail — forms still work without webhook
   }
 }
 
