@@ -5,7 +5,7 @@
 
 const WA_NUM      = '919999999999';        // ← your real WhatsApp number
 const BIZ_NAME    = 'Luxury Homes Indirapuram';
-const WEBHOOK_URL = 'https://hook.eu2.make.com/bysh1kk41jadvaoinf6eiyx8n864633b';
+const WEBHOOK_URL = 'https://hook.eu2.make.com/7dwuqdlwtqjto2b5g15197ifk3qbdvx7';
 
 /* ============================================================
    SEND TO MAKE WEBHOOK
