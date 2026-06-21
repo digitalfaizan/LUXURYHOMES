@@ -13,7 +13,7 @@ const WEBHOOK_URL = 'https://hook.eu2.make.com/7dwuqdlwtqjto2b5g15197ifk3qbdvx7'
    ============================================================ */
 async function sendToWebhook(payload) {
   // Skip if no valid webhook URL set yet
-  if (!WEBHOOK_URL || WEBHOOK_URL === 'PASTE_NEW_WEBHOOK_URL_HERE') return;
+  if (!WEBHOOK_URL || WEBHOOK_URL === 'https://hook.eu2.make.com/7dwuqdlwtqjto2b5g15197ifk3qbdvx7') return;
   try {
     const res = await fetch(WEBHOOK_URL, {
       method : 'POST',
