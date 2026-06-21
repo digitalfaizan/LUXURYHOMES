@@ -12,10 +12,8 @@ const WEBHOOK_URL = 'https://hook.eu2.make.com/7dwuqdlwtqjto2b5g15197ifk3qbdvx7'
    SEND TO MAKE WEBHOOK
    ============================================================ */
 async function sendToWebhook(payload) {
-  // Skip if no valid webhook URL set yet
-  if (!WEBHOOK_URL || WEBHOOK_URL === 'https://hook.eu2.make.com/7dwuqdlwtqjto2b5g15197ifk3qbdvx7') return;
   try {
-    const res = await fetch(WEBHOOK_URL, {
+    await fetch(WEBHOOK_URL, {
       method : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body   : JSON.stringify({
@@ -25,9 +23,9 @@ async function sendToWebhook(payload) {
         page      : document.title,
       }),
     });
-    if (!res.ok) console.warn('Webhook returned:', res.status);
   } catch (err) {
-    // Silent fail — forms still work without webhook
+    // Webhook failure is silent — WhatsApp fallback still works
+    console.warn('Webhook error:', err);
   }
 }
 
