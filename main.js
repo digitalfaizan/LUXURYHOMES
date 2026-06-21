@@ -447,4 +447,3 @@ function animateCounter(el, target) {
   };
   requestAnimationFrame(run);
 }
-
