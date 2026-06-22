@@ -27,7 +27,7 @@ async function sendToWebhook(payload) {
     });
     if (!res.ok) console.warn('Webhook returned:', res.status);
   } catch (err) {
-    // Silent fail — forms still work without webhook
+    // Silent fail — forms still work without a webhook
   }
 }
 
