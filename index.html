@@ -781,7 +781,33 @@
     <a href="tel:+919999999999" class="scta-call">📞 Call Now</a>
     <a href="https://wa.me/919999999999?text=Hi%2C%20I%27m%20interested%20in%20a%20property" class="scta-whatsapp" target="_blank">💬 WhatsApp</a>
   </div>
+  
+/*chatbot*/
+  <button id="lh-chat-btn" onclick="lhToggle()" aria-label="Chat with Priya">
+  <span id="lh-icon">💬</span>
+  <span id="lh-notif">1</span>
+</button>
 
+<div id="lh-chat-window" aria-hidden="true">
+  <div id="lh-chat-head">
+    <div class="lh-head-left">
+      <div class="lh-head-avatar">P</div>
+      <div>
+        <span class="lh-head-name">Priya · Luxury Homes</span>
+        <span class="lh-head-status">● Online — replies instantly</span>
+      </div>
+    </div>
+    <button id="lh-close-btn" onclick="lhToggle()">✕</button>
+  </div>
+  <div id="lh-msgs"></div>
+  <div id="lh-input-row">
+    <input type="text" id="lh-input" placeholder="Type a message..." onkeydown="if(event.key==='Enter')lhFreeText()" autocomplete="off" />
+    <button id="lh-send" onclick="lhFreeText()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+  <p id="lh-footer">Powered by AI · Your info stays private 🔒</p>
+</div>
   <script src="main.js"></script>
   <script src="chatbot.js"></script>
 </body>
