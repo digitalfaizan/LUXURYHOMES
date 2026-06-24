@@ -32,9 +32,10 @@
         <span class="logo-text">Luxury <em>Homes</em></span>
       </a>
       <ul class="nav-links" role="list">
-        <li><a href="#properties" class="nav-link">Properties</a></li>
+        
         <li><a href="about.html" class="nav-link">About</a></li>
         <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="property.html" class="nav-link">Properties</a></li>
         <li><a href="#blog" class="nav-link">Insights</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li>
         <li><a href="#lead" class="nav-link nav-cta">Free Consultation</a></li>
@@ -48,7 +49,7 @@
     </nav>
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <ul role="list">
-        <li><a href="#properties">Propertie</a></li>
+        <li><a href="#properties">Properties</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#blog">Insights</a></li>
@@ -502,45 +503,56 @@
             </div>
           </article>
           <article class="prop-card" data-type="rent">
+            <a href="property.html" class="prop-img-link">
             <div class="prop-img prop-img-2"><span class="prop-tag rent-tag">For Rent</span><span class="prop-price">₹18,000/mo</span></div>
+            </a>
             <div class="prop-info">
-              <h3>2 BHK Furnished Flat</h3>
+              <h3><a href="property.html">2 BHK Furnished Flat</a></h3>
               <p class="prop-loc">📍 Niti Khand 3, Indirapuram</p>
               <div class="prop-specs"><span>🏠 1100 sq ft</span><span>🛁 2 Bath</span><span>✅ Semi-Furnished</span></div>
               <button class="prop-cta" onclick="openLeadModal('2BHK Rent Niti Khand — ₹18K/mo')">Get Quote</button>
             </div>
+            
           </article>
           <article class="prop-card" data-type="invest">
+            <a href="property.html" class="prop-img-link">
             <div class="prop-img prop-img-3"><span class="prop-tag invest-tag">Investment</span><span class="prop-price">₹1.2 Crore</span></div>
+          </a>
             <div class="prop-info">
-              <h3>Commercial Shop — 15% ROI</h3>
+              <h3><a href="property.html">Commercial Shop — 15% ROI</a></h3>
               <p class="prop-loc">📍 Vaibhav Khand, Indirapuram</p>
               <div class="prop-specs"><span>🏢 450 sq ft</span><span>📈 15% Yield</span><span>🤝 Tenant Ready</span></div>
               <button class="prop-cta" onclick="openLeadModal('Commercial Shop Vaibhav Khand — ₹1.2Cr')">Get Quote</button>
             </div>
           </article>
           <article class="prop-card" data-type="buy">
+            <a href="property.html" class="prop-img-link">
             <div class="prop-img prop-img-4"><span class="prop-tag buy-tag">For Sale</span><span class="prop-price">₹55 Lakh</span></div>
+            </a>
             <div class="prop-info">
-              <h3>2 BHK Ready to Move</h3>
+              <h3><a href="property.html">2 BHK Ready to Move</a></h3>
               <p class="prop-loc">📍 Shakti Khand 4, Indirapuram</p>
               <div class="prop-specs"><span>🏠 980 sq ft</span><span>🛁 2 Bath</span><span>🏗 Ready Possession</span></div>
               <button class="prop-cta" onclick="openLeadModal('2BHK Shakti Khand — ₹55L')">Get Quote</button>
             </div>
           </article>
           <article class="prop-card" data-type="invest">
+            <a href="property.html" class="prop-img-link">
             <div class="prop-img prop-img-5"><span class="prop-tag invest-tag">Investment</span><span class="prop-price">₹95 Lakh</span></div>
+            </a>
             <div class="prop-info">
-              <h3>Plot — Rapid Appreciation Zone</h3>
+              <h3><a href="property.html">Plot — Rapid Appreciation Zone</a></h3>
               <p class="prop-loc">📍 Crossings Republik, Ghaziabad</p>
               <div class="prop-specs"><span>📐 200 Gaj</span><span>📈 22% Growth (2yr)</span><span>✅ Clear Title</span></div>
               <button class="prop-cta" onclick="openLeadModal('Plot Crossings Republik — ₹95L')">Get Quote</button>
             </div>
           </article>
           <article class="prop-card" data-type="rent">
+            <a href="property.html" class="prop-img-link">
             <div class="prop-img prop-img-6"><span class="prop-tag rent-tag">For Rent</span><span class="prop-price">₹35,000/mo</span></div>
+            </a>
             <div class="prop-info">
-              <h3>Office Space — Prime Location</h3>
+              <h3><a href="property.html">Office Space — Prime Location</a></h3>
               <p class="prop-loc">📍 Niti Khand 1, Indirapuram</p>
               <div class="prop-specs"><span>🏢 800 sq ft</span><span>🅿 2 Parking</span><span>💡 Fully Fitted</span></div>
               <button class="prop-cta" onclick="openLeadModal('Office Space Niti Khand — ₹35K/mo')">Get Quote</button>
@@ -746,32 +758,23 @@
     </div>
   </footer>
 
-  <!-- AI CHATBOT —  -->
- <button id="lh-chat-btn" onclick="lhToggle()" aria-label="Chat with Priya">
-  <span id="lh-icon">💬</span>
-  <span id="lh-notif">1</span>
-</button>
 
-<div id="lh-chat-window" aria-hidden="true">
-  <div id="lh-chat-head">
-    <div class="lh-head-left">
-      <div class="lh-head-avatar">P</div>
-      <div>
-        <span class="lh-head-name">Priya · Luxury Homes</span>
-        <span class="lh-head-status">● Online — replies instantly</span>
+
+  <!-- QUOTE MODAL -->
+  <div class="modal-overlay" id="quote-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+      <h3 id="modal-title">Get a <em>Free Quote</em></h3>
+      <p>Our expert will share price, availability and loan options within 2 hours.</p>
+      <div class="modal-fields">
+        <input type="text" id="m-name" placeholder="Your Name *" />
+        <input type="tel" id="m-phone" placeholder="WhatsApp Number *" />
+        <input type="email" id="m-email" placeholder="Email (Optional)" />
       </div>
+      <button class="modal-submit" onclick="submitModal()">📲 Get Quote on WhatsApp</button>
+      <p class="modal-note">Free · No obligation · Response within 2 hours</p>
     </div>
-    <button id="lh-close-btn" onclick="lhToggle()">✕</button>
   </div>
-  <div id="lh-msgs"></div>
-  <div id="lh-input-row">
-    <input type="text" id="lh-input" placeholder="Type a message..." onkeydown="if(event.key==='Enter')lhFreeText()" autocomplete="off" />
-    <button id="lh-send" onclick="lhFreeText()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-    </button>
-  </div>
-  <p id="lh-footer">Powered by AI · Your info stays private 🔒</p>
-</div>
 
   <!-- STICKY CTA mobile -->
   <div class="sticky-cta">

@@ -3,19 +3,18 @@
    Webhook: Make.com  |  Chatbot: Voiceflow
    ============================================================ */
 
-const WA_NUM      = '919968231049';        // ← your WhatsApp number
+const WA_NUM      = '919999999999';        // ← your real WhatsApp number
 const BIZ_NAME    = 'Luxury Homes Indirapuram';
-// ⬇️ PASTE YOUR NEW MAKE WEBHOOK URL HERE ⬇️
 const WEBHOOK_URL = 'https://hook.eu2.make.com/7dwuqdlwtqjto2b5g15197ifk3qbdvx7';
 
 /* ============================================================
    SEND TO MAKE WEBHOOK
+   Sends a structured payload so Make can route to the right
+   Google Sheet tab (Buy / Rent / Sell / Invest / Commercial)
    ============================================================ */
 async function sendToWebhook(payload) {
-  // Skip if no valid webhook URL set yet
-  if (!WEBHOOK_URL || WEBHOOK_URL === 'https://hook.eu2.make.com/7dwuqdlwtqjto2b5g15197ifk3qbdvx7') return;
   try {
-    const res = await fetch(WEBHOOK_URL, {
+    await fetch(WEBHOOK_URL, {
       method : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body   : JSON.stringify({
@@ -25,9 +24,9 @@ async function sendToWebhook(payload) {
         page      : document.title,
       }),
     });
-    if (!res.ok) console.warn('Webhook returned:', res.status);
   } catch (err) {
-    // Silent fail — forms still work without a webhook
+    // Webhook failure is silent — WhatsApp fallback still works
+    console.warn('Webhook error:', err);
   }
 }
 
@@ -282,19 +281,12 @@ function openLeadModal(ref) {
   modalRef = ref;
   document.getElementById('quote-modal')?.classList.add('open');
   document.body.style.overflow = 'hidden';
-  document.body.style.position = 'fixed';
-  document.body.style.width = '100%';
 }
 function closeModal() {
   document.getElementById('quote-modal')?.classList.remove('open');
   document.body.style.overflow = '';
-  document.body.style.position = '';
-  document.body.style.width = '';
 }
-window.addEventListener('click', e => {
-  if (e.target.id === 'quote-modal') closeModal();
-  if (e.target.classList?.contains('modal-close') || e.target.closest?.('.modal-close')) closeModal();
-});
+window.addEventListener('click', e => { if (e.target.id === 'quote-modal') closeModal(); });
 
 async function submitModal() {
   const name  = document.getElementById('m-name')?.value.trim()  || '';
@@ -331,8 +323,6 @@ async function submitModal() {
         </button>
       </div>`;
   }
-  // Failsafe: auto-close after 6s even if user clicks nothing
-  setTimeout(() => { closeModal(); }, 6000);
 }
 
 /* ============================================================
