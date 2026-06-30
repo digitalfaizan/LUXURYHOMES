@@ -33,12 +33,12 @@
     </nav>
     <div class="mobile-menu" id="mobile-menu">
       <ul role="list">
-        <li><a href="about.html" class="nav-link">About</a></li>
-        <li><a href="#services" class="nav-link">Services</a></li>
-        <li><a href="property.html" class="nav-link">Properties</a></li>
-        <li><a href="#blog" class="nav-link">Insights</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
-        <li><a href="#lead" class="nav-link nav-cta">Free Consultation</a></li>
+        <li><a href="index.html#properties">Properties</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#blog">Insights</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="index.html#lead" class="mob-cta">Free Consultation</a></li>
       </ul>
     </div>
   </header>
@@ -74,14 +74,25 @@
         <!-- GALLERY + CARD -->
         <div class="prop-detail-grid">
           <div>
-            <div class="prop-gallery">
-              <div class="gallery-main">🏠</div>
-              <div class="gallery-thumb">🛋️<span style="font-size:12px;color:var(--text-3);margin-top:4px;">Living Room</span></div>
-              <div class="gallery-thumb">🛏️<span style="font-size:12px;color:var(--text-3);margin-top:4px;">Master Bedroom</span></div>
-              <div class="gallery-thumb">🍳<span style="font-size:12px;color:var(--text-3);margin-top:4px;">Kitchen</span></div>
-              <div class="gallery-thumb map-thumb">
-                <span style="font-size:22px;">🗺️</span>
-                <span>Gyan Khand 2<br/>Indirapuram</span>
+            <div class="prop-carousel" id="prop-carousel">
+              <div class="carousel-main" id="carousel-main">
+                <div class="carousel-slide active" data-label="Living Room">
+                  <img src="https://images.pexels.com/photos/17947890/pexels-photo-17947890.jpeg">
+
+                </div>
+                <div class="carousel-slide"  data-label="Living Room"><img src="https://images.pexels.com/photos/28853343/pexels-photo-28853343.jpeg"></div>
+                <div class="carousel-slide"  data-label="Master Bedroom"><img src="https://images.pexels.com/photos/35189707/pexels-photo-35189707.jpeg"></div>
+                <div class="carousel-slide"  data-label="Kitchen"><img src="https://images.pexels.com/photos/6957081/pexels-photo-6957081.jpeg"></div>
+                <button class="carousel-arrow carousel-prev" onclick="carouselMove(-1)" aria-label="Previous photo">‹</button>
+                <button class="carousel-arrow carousel-next" onclick="carouselMove(1)" aria-label="Next photo">›</button>
+                <div class="carousel-counter" id="carousel-counter">1 / 4</div>
+              </div>
+              <div class="carousel-thumbs">
+                <div class="carousel-thumb active" onclick="carouselGoTo(0)">🏠</div>
+                <div class="carousel-thumb" onclick="carouselGoTo(1)">🛋️</div>
+                <div class="carousel-thumb" onclick="carouselGoTo(2)">🛏️</div>
+                <div class="carousel-thumb" onclick="carouselGoTo(3)">🍳</div>
+                
               </div>
             </div>
           </div>
@@ -99,7 +110,7 @@
               <div class="pqf"><span>Age</span><strong>4 Years</strong></div>
               <div class="pqf"><span>Status</span><strong>Ready</strong></div>
             </div>
-            <button class="prop-get-quote" onclick="openLeadModal('3 BHK Gyan Khand 2 — ₹78L')">💬 Get Free Quote</button>
+            <button class="prop-get-quote" onclick="openLeadModal('3 BHK Gyan Khand 2 — ₹78L')">💬 Contact Us</button>
             <a href="https://wa.me/919999999999?text=Hi%2C%20I%27m%20interested%20in%203%20BHK%20Gyan%20Khand%202%20%E2%82%B978L" class="prop-whatsapp-btn" target="_blank">📲 WhatsApp Now</a>
             <p class="prop-card-note">Free consultation · No obligation · Same day site visit available</p>
           </div>
@@ -257,7 +268,7 @@
             <!-- CONTACT CARD -->
             <div class="prop-info-card" style="position:static;">
               <p style="font-size:13px;color:var(--text-3);margin-bottom:14px;">Interested in this property? Our expert will call you back in under 2 hours.</p>
-              <button class="prop-get-quote" onclick="openLeadModal('3 BHK Gyan Khand 2 — ₹78L')">💬 Get Free Quote</button>
+              <button class="prop-get-quote" onclick="openLeadModal('3 BHK Gyan Khand 2 — ₹78L')">💬 Contact Us</button>
               <a href="https://wa.me/919999999999?text=Hi%2C%20I%27m%20interested%20in%203BHK%20Gyan%20Khand%202" class="prop-whatsapp-btn" target="_blank">📲 WhatsApp Now</a>
               <a href="tel:+919999999999" style="display:block;width:100%;padding:11px;border:1.5px solid var(--border);color:var(--text-2);border-radius:var(--radius-xs);font-size:14px;font-weight:600;text-align:center;margin-bottom:14px;transition:var(--transition);">📞 Call Now</a>
               <p class="prop-card-note">Free · No obligation · Same day site visit</p>
@@ -294,7 +305,7 @@
               <h3>2 BHK Ready to Move</h3>
               <p class="prop-loc">📍 Shakti Khand 4, Indirapuram</p>
               <div class="prop-specs"><span>🏠 980 sq ft</span><span>🛁 2 Bath</span><span>🏗 Ready</span></div>
-              <button class="prop-cta" onclick="openLeadModal('2BHK Shakti Khand — ₹55L')">Get Quote</button>
+              <button class="prop-cta" onclick="openLeadModal('2BHK Shakti Khand — ₹55L')">Contact Us</button>
             </div>
           </article>
           <article class="prop-card" data-type="buy">
@@ -303,7 +314,7 @@
               <h3>3 BHK With Study Room</h3>
               <p class="prop-loc">📍 Niti Khand 2, Indirapuram</p>
               <div class="prop-specs"><span>🏠 1680 sq ft</span><span>🛁 3 Bath</span><span>🅿 2 Parking</span></div>
-              <button class="prop-cta" onclick="openLeadModal('3BHK Niti Khand — ₹92L')">Get Quote</button>
+              <button class="prop-cta" onclick="openLeadModal('3BHK Niti Khand — ₹92L')">Contact Us</button>
             </div>
           </article>
           <article class="prop-card" data-type="invest">
@@ -312,7 +323,7 @@
               <h3>Commercial Shop — 15% ROI</h3>
               <p class="prop-loc">📍 Vaibhav Khand, Indirapuram</p>
               <div class="prop-specs"><span>🏢 450 sq ft</span><span>📈 15% Yield</span><span>🤝 Tenant Ready</span></div>
-              <button class="prop-cta" onclick="openLeadModal('Shop Vaibhav Khand — ₹1.2Cr')">Get Quote</button>
+              <button class="prop-cta" onclick="openLeadModal('Shop Vaibhav Khand — ₹1.2Cr')">Contact Us</button>
             </div>
           </article>
         </div>
@@ -354,19 +365,19 @@
   </footer>
 
   <!-- VOICEFLOW CHATBOT — injected by main.js -->
-  <div id="chatbot" style="display:none;"></div>
+  
 
   <div class="modal-overlay" id="quote-modal" role="dialog" aria-modal="true">
     <div class="modal-box">
       <button class="modal-close" onclick="closeModal()">✕</button>
-      <h3>Get a <em>Free Quote</em></h3>
+      <h3>Get in <em>Touch</em></h3>
       <p>We'll call you back in under 2 hours with price details and availability.</p>
       <div class="modal-fields">
         <input type="text" id="m-name" placeholder="Your Name *" />
         <input type="tel" id="m-phone" placeholder="WhatsApp Number *" />
         <input type="email" id="m-email" placeholder="Email (Optional)" />
       </div>
-      <button class="modal-submit" onclick="submitModal()">📲 Get Quote on WhatsApp</button>
+      <button class="modal-submit" onclick="submitModal()">📲 Send My Interest</button>
       <p class="modal-note">Free · No obligation · Response within 2 hours</p>
     </div>
   </div>
@@ -376,34 +387,7 @@
     <a href="https://wa.me/919999999999?text=Hi%2C%20I%27m%20interested%20in%203BHK%20Gyan%20Khand%202" class="scta-whatsapp" target="_blank">💬 Enquire</a>
   </div>
 
-<!-- chat bot -->
-  <button id="lh-chat-btn" onclick="lhToggle()" aria-label="Chat with Priya">
-  <span id="lh-icon">💬</span>
-  <span id="lh-notif">1</span>
-</button>
-
-<div id="lh-chat-window" aria-hidden="true">
-  <div id="lh-chat-head">
-    <div class="lh-head-left">
-      <div class="lh-head-avatar">P</div>
-      <div>
-        <span class="lh-head-name">Priya · Luxury Homes</span>
-        <span class="lh-head-status">● Online — replies instantly</span>
-      </div>
-    </div>
-    <button id="lh-close-btn" onclick="lhToggle()">✕</button>
-  </div>
-  <div id="lh-msgs"></div>
-  <div id="lh-input-row">
-    <input type="text" id="lh-input" placeholder="Type a message..." onkeydown="if(event.key==='Enter')lhFreeText()" autocomplete="off" />
-    <button id="lh-send" onclick="lhFreeText()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-    </button>
-  </div>
-  <p id="lh-footer">Powered by AI · Your info stays private 🔒</p>
-</div>
-
-  
   <script src="main.js"></script>
+  <script src="chatbot.js"></script>
 </body>
 </html>

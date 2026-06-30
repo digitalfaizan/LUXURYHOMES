@@ -437,3 +437,99 @@ function animateCounter(el, target) {
   };
   requestAnimationFrame(run);
 }
+
+/* ============================================================
+   PROPERTY VALUE CHART
+   ============================================================ */
+/* ============================================================
+   PROPERTY CARD CAROUSEL — homepage grid (click arrows to cycle)
+   ============================================================ */
+function cardCarouselMove(btn, dir) {
+  const wrap = btn.closest('.prop-img-carousel');
+  if (!wrap) return;
+  const imgs = Array.from(wrap.querySelectorAll('.prop-img'));
+  let idx = imgs.findIndex(i => i.classList.contains('pic-active'));
+  if (idx === -1) idx = 0;
+  imgs[idx].classList.remove('pic-active');
+  idx = (idx + dir + imgs.length) % imgs.length;
+  imgs[idx].classList.add('pic-active');
+}
+
+/* ============================================================
+   PROPERTY IMAGE CAROUSEL — click + swipe navigation
+   ============================================================ */
+let carouselIndex = 0;
+
+function carouselGoTo(idx) {
+  const main   = document.getElementById('carousel-main');
+  if (!main) return;
+  const slides = main.querySelectorAll('.carousel-slide');
+  const thumbs = document.querySelectorAll('.carousel-thumb');
+  const counter = document.getElementById('carousel-counter');
+
+  if (idx < 0) idx = slides.length - 1;
+  if (idx >= slides.length) idx = 0;
+  carouselIndex = idx;
+
+  slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+  thumbs.forEach((t, i) => { if (!t.classList.contains('map-thumb')) t.classList.toggle('active', i === idx); });
+  if (counter) counter.textContent = `${idx + 1} / ${slides.length}`;
+}
+
+function carouselMove(dir) {
+  carouselGoTo(carouselIndex + dir);
+}
+
+/* Click main image to advance to next photo */
+document.addEventListener('DOMContentLoaded', () => {
+  const main = document.getElementById('carousel-main');
+  if (!main) return;
+
+  main.addEventListener('click', e => {
+    if (e.target.closest('.carousel-arrow')) return; // arrows handle themselves
+    carouselMove(1);
+  });
+
+  /* Swipe support for mobile */
+  let touchStartX = 0;
+  main.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+  main.addEventListener('touchend', e => {
+    const touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 40) carouselMove(diff > 0 ? 1 : -1);
+  }, { passive: true });
+
+  /* Keyboard arrows when focused */
+  main.setAttribute('tabindex', '0');
+  main.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') carouselMove(1);
+    if (e.key === 'ArrowLeft')  carouselMove(-1);
+  });
+});
+
+function buildChart() {
+  const wrap = document.getElementById('prop-chart-bars');
+  if (!wrap) return;
+  const data = [
+    {yr:'2020',val:52,type:'past'},{yr:'2021',val:56,type:'past'},
+    {yr:'2022',val:63,type:'past'},{yr:'2023',val:69,type:'past'},
+    {yr:'2024',val:78,type:'past'},{yr:'2025',val:84,type:'future'},
+    {yr:'2026',val:91,type:'future'},{yr:'2027',val:99,type:'future'},
+    {yr:'2028',val:108,type:'future'},{yr:'2029',val:118,type:'future'},
+  ];
+  const max = Math.max(...data.map(d => d.val));
+  wrap.innerHTML = '';
+  data.forEach(d => {
+    const col = document.createElement('div');
+    col.style.cssText = 'flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;';
+    const bar = document.createElement('div');
+    bar.className = 'cbar ' + d.type;
+    bar.style.height = Math.round((d.val / max) * 100) + '%';
+    bar.title = '₹' + d.val + 'L (' + d.yr + ')';
+    const lbl = document.createElement('div');
+    lbl.className = 'cbar-label';
+    lbl.textContent = d.yr;
+    col.append(bar, lbl);
+    wrap.appendChild(col);
+  });
+}
