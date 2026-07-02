@@ -252,6 +252,7 @@ em {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  
 }
 .hero-bg {
   position: absolute; inset: 0;
@@ -1563,7 +1564,7 @@ footer { background: var(--navy); padding-top: 64px; }
 }
 
 @media (max-width: 768px) {
-  
+  .hero { padding: 130px 0 70px; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
   .lead-options { grid-template-columns: 1fr 1fr; }
