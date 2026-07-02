@@ -533,3 +533,12 @@ function buildChart() {
     wrap.appendChild(col);
   });
 }
+
+
+
+
+
+function dismissBanner() {
+  document.getElementById('demoBanner').remove();
+  document.getElementById('site-header').style.top = '0';
+}
