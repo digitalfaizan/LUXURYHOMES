@@ -109,7 +109,7 @@ em {
 
 .nav-container {
   max-width: var(--container);
-  margin: auto;
+  margin: 40px;
   padding: 0 40px;
   height: 76px;
   display: flex;
