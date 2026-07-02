@@ -534,11 +534,3 @@ function buildChart() {
   });
 }
 
-
-
-
-
-function dismissBanner() {
-  document.getElementById('demoBanner').remove();
-  document.getElementById('site-header').style.top = '0';
-}
