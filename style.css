@@ -1563,7 +1563,7 @@ footer { background: var(--navy); padding-top: 64px; }
 }
 
 @media (max-width: 768px) {
-  header { margin-top:25px; }
+  
   .nav-links { display: none; }
   .hamburger { display: flex; }
   .lead-options { grid-template-columns: 1fr 1fr; }
